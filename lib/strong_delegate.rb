@@ -4,13 +4,15 @@ module StrongDelegate
   def self.included(base)
     base.extend(ClassMethods)
   end
+
   module ClassMethods
     def def_delgate(&block)
       obj = Object.new
       obj.singleton_class.class_eval &block
 
-      obj.singleton_methods.each do |m|
-        p m
+      obj.singleton_methods.each do |mn|
+        m = obj.singleton_class.instance_method(mn)
+        p m.parameters
       end
     end
 
