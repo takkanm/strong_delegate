@@ -1,21 +1,35 @@
-require "strong_delegate/version"
+# require "strong_delegate/version"
 
 module StrongDelegate
-  def self.delegate(instance_variable_name)
-    @instance_variable_name = instance_variable_name
+  def self.included(base)
+    base.extend(ClassMethods)
   end
+  module ClassMethods
+    def def_delgate(&block)
+      obj = Object.new
+      obj.singleton_class.class_eval &block
 
-  def self.delegate_object_name
-    @instance_variable_name
-  end
+      obj.singleton_methods.each do |m|
+        p m
+      end
+    end
 
-  def self.delegate(method_name, arity: 0, block: false)
-    @delegate_methods ||= {}
-    @delegate_methods[method_name.to_sym] = {arity: arity, block: false}
-  end
+    def delegate(instance_variable_name)
+      @instance_variable_name = instance_variable_name
+    end
 
-  def self.delegate_methods
-    @delegate_methods
+    def delegate_object_name
+      @instance_variable_name
+    end
+
+    def delegate(method_name, arity: 0, block: false)
+      @delegate_methods ||= {}
+      @delegate_methods[method_name.to_sym] = {arity: arity, block: false}
+    end
+
+    def delegate_methods
+      @delegate_methods
+    end
   end
 
   def method_missing(name, *args, &block)
