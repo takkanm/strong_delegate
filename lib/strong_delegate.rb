@@ -6,7 +6,7 @@ module StrongDelegate
   end
 
   module ClassMethods
-    def def_delgate(&block)
+    def def_delegate(delegate_class, &block)
       obj = Object.new
       obj.singleton_class.class_eval &block
 
