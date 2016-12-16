@@ -10,9 +10,9 @@ module StrongDelegate
       obj = Object.new
       obj.singleton_class.class_eval &block
 
-      obj.singleton_methods.each do |mn|
-        m = obj.singleton_class.instance_method(mn)
-        p m.parameters
+      obj.singleton_methods.each do |method_name|
+        m = obj.singleton_class.instance_method(method_name)
+        delegate_methods[method_name] = m.parameters
       end
     end
 
@@ -25,12 +25,11 @@ module StrongDelegate
     end
 
     def delegate(method_name, arity: 0, block: false)
-      @delegate_methods ||= {}
       @delegate_methods[method_name.to_sym] = {arity: arity, block: false}
     end
 
     def delegate_methods
-      @delegate_methods
+      @delegate_methods ||= {}
     end
   end
 
