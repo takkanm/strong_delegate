@@ -1,4 +1,4 @@
-# require "strong_delegate/version"
+require "strong_delegate/version"
 
 module StrongDelegate
   def self.included(base)
@@ -61,17 +61,3 @@ module StrongDelegate
     raise unless block_given == !!(block_given)
   end
 end
-
-class Do
-  include StrongDelegate
-
-  def_delegate do
-    def hoge1(a, *c, &b) end
-    def hoge2(*a, c, &b) end
-    def hoge3(a, c: 1, &b) end
-  end
-end
-
-Do.new.hoge1(1, 3, 4, 5)
-Do.new.hoge2(1, 3, 4, 5)
-Do.new.hoge3(1, c: 1)
