@@ -33,10 +33,6 @@ module StrongDelegate
       @delegate_class
     end
 
-    def delegate_object_name
-      @instance_variable_name
-    end
-
     def delegate_methods
       @delegate_methods ||= {}
     end
