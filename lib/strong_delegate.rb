@@ -6,8 +6,7 @@ module StrongDelegate
   end
 
   module ClassMethods
-    def def_delegate(delegate_class, &block)
-      @delegate_class = delegate_class
+    def def_delegate(delegate_class = nil, &block)
 
       obj = Object.new
       obj.singleton_class.class_eval &block
@@ -16,6 +15,18 @@ module StrongDelegate
         m = obj.singleton_class.instance_method(method_name)
         delegate_methods[method_name] = m.parameters
       end
+
+      delegate_to delegate_class if delegate_class
+    end
+
+    def assert_delegate!(delegate_class)
+      # TODO impl
+    end
+
+    def delegate_to(delegate_class)
+      assert_delegate! delegate_class
+
+      @delegate_class = delegate_class
     end
 
     def delegate_class
