@@ -1,6 +1,8 @@
 require "strong_delegate/version"
 
 module StrongDelegate
+  class InvalidInterfaceError < StandardError; end
+
   def self.included(base)
     base.extend(ClassMethods)
   end
@@ -20,7 +22,10 @@ module StrongDelegate
     end
 
     def assert_delegate!(delegate_class)
-      # TODO impl
+      delegate_methods.each do |method_name, parameters|
+        method = delegate_class.instance_method(method_name)
+        raise StrongDelegate::InvalidInterfaceError unless method.parameters == parameters
+      end
     end
 
     def delegate_to(delegate_class)
