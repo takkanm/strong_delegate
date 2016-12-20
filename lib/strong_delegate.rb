@@ -58,7 +58,7 @@ module StrongDelegate
   end
 
   def assert_delegate!(object, name)
-    return if object.method(name).parameters == self.class.delegate_methods[name]
+    return if object.method(name).parameters.map(&:first) == self.class.delegate_methods[name].map(&:first)
     raise StrongDelegate::InvalidInterfaceError
   end
 end
