@@ -54,7 +54,7 @@ module StrongDelegate
     object = delegate_object
     assert_delegate!(object, name.to_sym)
 
-    object.public_send(*args, &block)
+    object.public_send(name, *args, &block)
   end
 
   def assert_delegate!(object, name)
