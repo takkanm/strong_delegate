@@ -12,9 +12,12 @@ module StrongDelegate
 
     def def_delegate(delegate_variable_name = nil, &block)
       @delegate_variable_name = delegate_variable_name
+      set_method_defines block
+    end
 
+    def set_method_defines(define_proc)
       obj = Object.new
-      obj.singleton_class.class_eval &block
+      obj.singleton_class.class_eval &define_proc
 
       obj.singleton_methods.each do |method_name|
         m = obj.singleton_class.instance_method(method_name)
