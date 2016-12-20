@@ -3,44 +3,44 @@ require 'strong_delegate'
 
 class TestStrongDelegate < Test::Unit::TestCase
   sub_test_case 'define delegate class method' do
-    class ValidToClass
-      def delegatable_method(a, *c, &b) end
+    class Human
+      def run(shoes) end
     end
 
-    class InvalidToClass
-      def delegatable_method(a, &b) end
+    class Cat
+      def run() end
     end
 
-    class DelegateClass
+    class Animal
       include StrongDelegate
 
-      def_delegate :@to do
-        def delegatable_method(a, *c, &b) end
+      def_delegate :@species do
+        def run(shoes) end
       end
 
-      def initialize(to)
-        @to = to
+      def initialize(species)
+        @species  = species
       end
     end
 
     sub_test_case 'valid call' do
       setup do
-        @subject = DelegateClass.new(ValidToClass.new)
+        @subject = Animal.new(Human.new)
       end
 
       def test_valid_method_call
-        assert_nothing_raised { @subject.delegatable_method(1, 3) { true } }
+        assert_nothing_raised { @subject.run('new balance') }
       end
     end
 
     sub_test_case 'invalid call' do
       setup do
-        @subject = DelegateClass.new(InvalidToClass.new)
+        @subject = Animal.new(Cat.new)
       end
 
       def test_valid_method_call
         assert_raise StrongDelegate::InvalidInterfaceError do
-          @subject.delegatable_method(1) { true }
+          @subject.run
         end
       end
     end
