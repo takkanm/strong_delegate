@@ -19,6 +19,10 @@ module StrongDelegate
       @delegate_variable_name = delegate_variable_name
     end
 
+    def delegate_methods
+      @delegate_methods ||= {}
+    end
+
     private
 
     def set_method_defines(define_proc)
@@ -29,10 +33,6 @@ module StrongDelegate
         m = obj.singleton_class.instance_method(method_name)
         delegate_methods[method_name] = m.parameters
       end
-    end
-
-    def delegate_methods
-      @delegate_methods ||= {}
     end
   end
 
