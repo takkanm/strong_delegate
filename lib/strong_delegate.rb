@@ -22,13 +22,6 @@ module StrongDelegate
       end
     end
 
-    def assert_delegate!(delegate_class)
-      delegate_methods.each do |method_name, parameters|
-        method = delegate_class.instance_method(method_name)
-        raise StrongDelegate::InvalidInterfaceError unless method.parameters == parameters
-      end
-    end
-
     def delegate_to(delegate_variable_name)
       @delegate_variable_name = delegate_variable_name
     end
