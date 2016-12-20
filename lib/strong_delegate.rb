@@ -15,6 +15,12 @@ module StrongDelegate
       set_method_defines block
     end
 
+    def delegate_to(delegate_variable_name)
+      @delegate_variable_name = delegate_variable_name
+    end
+
+    private
+
     def set_method_defines(define_proc)
       obj = Object.new
       obj.singleton_class.class_eval &define_proc
@@ -25,14 +31,12 @@ module StrongDelegate
       end
     end
 
-    def delegate_to(delegate_variable_name)
-      @delegate_variable_name = delegate_variable_name
-    end
-
     def delegate_methods
       @delegate_methods ||= {}
     end
   end
+
+  private
 
   def method_missing(name, *args, &block)
     if self.class.delegate_methods.key?(name.to_sym)
