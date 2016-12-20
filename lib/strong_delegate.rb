@@ -8,7 +8,7 @@ module StrongDelegate
   end
 
   module ClassMethods
-    attr_read :delegate_variable_name
+    attr_reader :delegate_variable_name
 
     def def_delegate(delegate_variable_name = nil, &block)
       @delegate_variable_name = delegate_variable_name
