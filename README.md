@@ -22,7 +22,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Define delegate
+
+You can delegate to instance variable.
+
+```ruby
+class Foo
+  def_delegate :@hoge do
+  	def bar(a, b, *c) end
+  	def buzz(a, d:, &block) end
+  end
+end
+```
+
+If delegate object has same function interface, it can call. But, that hasn't same fucntion interface, raise Error.
 
 ## Development
 
