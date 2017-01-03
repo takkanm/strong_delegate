@@ -33,6 +33,26 @@ class TestStrongDelegate < Test::Unit::TestCase
       end
     end
 
+    sub_test_case 'respond_to?' do
+      setup do
+        @subject = Animal.new(Human.new)
+      end
+
+      def test_respond_to
+        assert @subject.respond_to?(:run)
+      end
+    end
+
+    sub_test_case 'get Method object' do
+      setup do
+        @subject = Animal.new(Human.new)
+      end
+
+      def test_get_method_object
+        assert_instance_of(Method, @subject.method(:run))
+      end
+    end
+
     sub_test_case 'invalid call' do
       setup do
         @subject = Animal.new(Cat.new)

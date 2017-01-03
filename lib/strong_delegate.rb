@@ -39,11 +39,19 @@ module StrongDelegate
   private
 
   def method_missing(name, *args, &block)
-    if self.class.delegate_methods.key?(name.to_sym)
+    if respond_to_delegate_methods?(name)
       invoke_delegate_method!(name.to_sym, args, block)
     else
       super
     end
+  end
+
+  def respond_to_missing?(name, include_private = false)
+    respond_to_delegate_methods?(name) || supper
+  end
+
+  def respond_to_delegate_methods?(name)
+    self.class.delegate_methods.key?(name.to_sym)
   end
 
   def delegate_object
